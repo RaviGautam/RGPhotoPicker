@@ -41,6 +41,7 @@ class PhotoPickerBottomView: UIToolbar {
     let sourceType: SourceType
     let allowLoadPhotoLibrary: Bool
     let isMultipleSelect: Bool
+    var isEditImage = false
     init(
         config: PickerBottomViewConfiguration,
         allowLoadPhotoLibrary: Bool,
@@ -147,7 +148,7 @@ class PhotoPickerBottomView: UIToolbar {
         #if HXPICKER_ENABLE_EDITOR
         contentView.addSubview(editBtn)
         #endif
-        contentView.addSubview(originalBtn)
+        //contentView.addSubview(originalBtn)
         contentView.addSubview(finishBtn)
         return contentView
     }()
@@ -308,7 +309,7 @@ extension PhotoPickerBottomView {
     }
     
     @objc func didPreviewButtonClick(button: UIButton) {
-        hx_delegate?.bottomView(didPreviewButtonClick: self)
+        //hx_delegate?.bottomView(didPreviewButtonClick: self)
     }
     
     @objc func didOriginalButtonClick() {
@@ -387,6 +388,7 @@ extension PhotoPickerBottomView {
         originalLoadingDelayTimer?.invalidate()
         originalLoadingDelayTimer = nil
         if let pickerController = viewController?.pickerController {
+            isEditImage = false
             pickerController.cancelRequestAssetFileSize(isPreview: sourceType == .preview)
         }
         showOriginalLoadingView = false
@@ -395,7 +397,15 @@ extension PhotoPickerBottomView {
         updateOriginalButtonFrame()
     }
     @objc func didFinishButtonClick(button: UIButton) {
-        hx_delegate?.bottomView(didFinishButtonClick: self)
+        if isEditImage == false{
+            isEditImage = true
+            
+            hx_delegate?.bottomView(didPreviewButtonClick: self)
+        }else{
+            hx_delegate?.bottomView(didFinishButtonClick: self)
+        }
+       
+       
     }
 }
 
