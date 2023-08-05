@@ -144,7 +144,7 @@ class PhotoPickerBottomView: UIToolbar {
     
     lazy var contentView: UIView = {
         let contentView = UIView.init(frame: CGRect(x: 0, y: 0, width: width, height: 50 + UIDevice.bottomMargin))
-        contentView.addSubview(previewBtn)
+        //contentView.addSubview(previewBtn)
         #if HXPICKER_ENABLE_EDITOR
         contentView.addSubview(editBtn)
         #endif
